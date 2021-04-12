@@ -1,4 +1,4 @@
-in = test.cpp
+in = main.cpp
 ut = main
 
 CXXFLAGS = -std=c++17 -Wall
