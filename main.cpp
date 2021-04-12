@@ -64,6 +64,25 @@ size_t find_in_names(std::vector<person> haystack, std::string name_part){ //ret
 	return total;
 }
 
+std::vector<person> find_person_from_city(std::vector<person> haystack, std::string city){
+	std::vector<person> result;
+	size_t found;
+	for (auto &c : city){
+		if (c <= 'Z' && c >= 'A')
+			c = c - ('Z' - 'z');
+	}
+	for (auto a : haystack){
+		for (auto &c : a.adress.city){
+			if (c <= 'Z' && c >= 'A')
+				c = c - ('Z' - 'z');
+		}
+		found = a.adress.city.find(city);
+		if (found != std::string::npos){
+			result.push_back(a);
+	}
+	return result;
+}
+
 int main (){
 	std::cout << "Hello man";
 }
