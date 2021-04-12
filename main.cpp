@@ -47,7 +47,15 @@ std::vector<person> read_file(std::string filename){
 size_t find_in_names(std::vector<person> haystack, std::string name_part){ //returns the amount of people that have the name_part of their name in haystack
 	size_t total = 0;
 	size_t found;
-	for (const auto &a : haystack){
+	for (auto &c : name_part){
+		if (c <= 'Z' && c >= 'A')
+			c = c - ('Z' - 'z');
+	}
+	for (auto a : haystack){
+		for (auto &c : a.name){
+			if (c <= 'Z' && c >= 'A')
+				c = c - ('Z' - 'z');
+		}
 		found = a.name.find(name_part);
 		if (found != std::string::npos){
 			total++;
