@@ -8,6 +8,7 @@ struct Adress{
 	std::string zip;
 	std::string city;
 };
+	
 struct person{
 	std::string name;
 	std::string id;
@@ -41,6 +42,18 @@ std::vector<person> read_file(std::string filename){
 		std::cout << "Something is wrong with your file bro" << std::endl;
 	}
 	return list;
+}
+
+size_t find_in_names(std::vector<person> haystack, std::string name_part){ //returns the amount of people that have the name_part of their name in haystack
+	size_t total = 0;
+	size_t found;
+	for (const auto &a : haystack){
+		found = a.name.find(name_part);
+		if (found != std::string::npos){
+			total++;
+		}
+	}
+	return total;
 }
 
 int main (){
