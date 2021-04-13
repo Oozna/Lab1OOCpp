@@ -67,22 +67,57 @@ size_t find_in_names(std::vector<person> haystack, std::string name_part){ //ret
 std::vector<person> find_person_from_city(std::vector<person> haystack, std::string city){
 	std::vector<person> result;
 	size_t found;
-	for (auto &c : city){
-		if (c <= 'Z' && c >= 'A')
-			c = c - ('Z' - 'z');
-	}
+	for (auto &c : city) {
+		if ((c <= 'z') and (c >= 'a')) c = toupper(c);
+	}	
+
 	for (auto a : haystack){
-		for (auto &c : a.adress.city){
-			if (c <= 'Z' && c >= 'A')
-				c = c - ('Z' - 'z');
-		}
 		found = a.adress.city.find(city);
 		if (found != std::string::npos){
 			result.push_back(a);
+		}
 	}
 	return result;
 }
 
+
 int main (){
-	std::cout << "Hello man";
+	std::vector<person>contacts;
+	contacts = read_file("names.txt");
+	bool check = true;
+	int answer;
+
+	while (check){
+		std::cout << "Welcome to the contact book motherfucker! Here are your options" << std::endl << "1. Search by name" << std::endl << "2. Search by city" << std::endl << "3. Exit the program" << std::endl;
+		std::cin >> answer;
+		switch(answer){
+			case 1:{
+				std::cout << "Write full name or part of name" << std::endl;
+				size_t numberOfPeople;
+				std::string searchName;
+				std::cin >> searchName;
+				numberOfPeople = find_in_names(contacts, searchName);
+				std::cout << "Your search resulted in " << numberOfPeople << " matches" << std::endl << std::endl;
+
+				break;
+			}
+			case 2:{
+			    std::cout << "Write full name of city" << std::endl;
+			    std::string searchCity;
+			    std::vector<person> inCity;
+			    std::getline(std::cin, searchCity);
+			    std::getline(std::cin, searchCity);
+			    inCity = find_person_from_city(contacts, searchCity);
+
+				for (const auto &a : inCity){
+					std::cout << a.id << ", " << a.name << ", " << a.adress.city << std::endl;
+				}
+				break;
+			}
+			case 3:{
+			    std::cout << "Alright have a good day/night" << std::endl;
+				check = false;	
+			}
+		}
+	}
 }
